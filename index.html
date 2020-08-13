@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height" />
+    <title>Ace Example</title>
+
+        <script src="src/ace.js" data-ace-base="src" type="text/javascript" charset="utf-8"></script>
+<script src="src/ext-language_tools.js"></script>
+
+    <link href="../Ace-editor/doc/site/images/favicon.ico" rel="icon" type="image/x-icon">
+</head>
+<body>
+    <h1>Ace example here:</h1>
+  <div id="editor-container"></div>
+
+    <script>
+        var aceEditor = window.ace.edit("editor-container");
+        console.log(Object.keys(aceEditor.$options));
+        aceEditor.setOptions({
+
+            enableBasicAutocompletion: true, // the editor completes the statement when you hit Ctrl + Space
+
+            enableLiveAutocompletion: true, // the editor completes the statement while you are typing
+
+            showPrintMargin: false, // hides the vertical limiting strip
+
+            maxLines: Infinity,
+            showLineNumbers: false,
+
+            fontSize: "100%" // ensures that the editor fits in the environment
+
+        });
+
+        // defines the style of the editor
+        aceEditor.setTheme("ace/theme/sqlserver");
+
+        // hides line numbers (widens the area occupied by error and warning messages)
+        // aceEditor.renderer.setOption("showLineNumbers", false); 
+
+        // ensures proper autocomplete, validation and highlighting of JavaScript code
+        aceEditor.getSession().setMode("ace/mode/javascript");
+
+        var ace = window["ace"],
+        langTools = ace.require("ace/ext/language_tools"),
+        contextCompleter = {
+
+            getCompletions(editor, session, pos, prefix, callback) {
+
+                var dataHolder = AppPlayer.findInArray(dataHolders, holder => holder.editor === editor);
+
+                callback(null, dataHolder && dataHolder.data);
+
+            }  
+
+        };
+        langTools.addCompleter(contextCompleter); 
+
+
+    </script>
+    
+
+</body>
+</html>
